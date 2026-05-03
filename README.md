@@ -146,6 +146,7 @@ numpy==1.24.3
 pillow==10.0.0
 
 Step 4: Project Structure
+
 malaria-detection-system/
 │
 ├── notebooks/

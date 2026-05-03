@@ -18,9 +18,10 @@ Research Focus: Model comparison, transfer learning, explainability (XAI), and u
 <img width="907" height="247" alt="image" src="https://github.com/user-attachments/assets/2cf95a80-889a-4208-84fd-537f3d3b36ac" />
 Key Insight: The fine-tuned MobileNetV2 achieves the best test accuracy (95.72%), demonstrating the effectiveness of transfer learning combined with fine-tuning on domain-specific medical data.
 
+
 **Methodology**
 
-**Data**
+**Data**\
 Source: TensorFlow Malaria Dataset\
 Classes: Parasitized (infected), Uninfected (clean)\
 Image Resolution: 224 × 224 pixels (resized for model input)\
@@ -28,22 +29,22 @@ Train/Val/Test Split: Stratified division to maintain class balance\
 
 **Model Development Pipeline**
 
-1. Baseline Model (LeNet with Batch Normalization)
-Custom CNN architecture with batch normalization layers
-Lightweight, interpretable baseline for comparison
-Serves as a reference for transfer learning benefits
+1. Baseline Model (LeNet with Batch Normalization)\
+Custom CNN architecture with batch normalization layers\
+Lightweight, interpretable baseline for comparison\
+Serves as a reference for transfer learning benefits\
 
-2. Transfer Learning (MobileNetV2)
-Pre-trained on ImageNet weights
-Frozen initial layers to preserve learned features
-Fine-tuned dense layers for binary classification
+2. Transfer Learning (MobileNetV2)\
+Pre-trained on ImageNet weights\
+Frozen initial layers to preserve learned features\
+Fine-tuned dense layers for binary classification\
 
-3. Fine-Tuning (MobileNetV2)
-Unfroze selective layers for domain adaptation
-Low learning rate to prevent catastrophic forgetting
-Data augmentation techniques applied during training
+3. Fine-Tuning (MobileNetV2)\
+Unfroze selective layers for domain adaptation\
+Low learning rate to prevent catastrophic forgetting\
+Data augmentation techniques applied during training\
 
-**Training Configuration**
+**Training Configuration**\
 
 1. Optimizer: Adam
 2. Loss Function: Binary Crossentropy
@@ -53,69 +54,68 @@ Data augmentation techniques applied during training
 **Explainability: Grad-CAM**
 Gradient-weighted Class Activation Mapping (Grad-CAM) was implemented to provide interpretable predictions by visualizing the regions of input images that most influence the model's decisions.
 
-Approach:
-Computes gradients of the output class with respect to feature maps in the final convolutional layer
-Generates activation heatmaps highlighting discriminative regions
-Heatmaps are overlaid on original images for intuitive visualization
+Approach:\
+Computes gradients of the output class with respect to feature maps in the final convolutional layer\
+Generates activation heatmaps highlighting discriminative regions\
+Heatmaps are overlaid on original images for intuitive visualization\
 
-Use Cases:
-Clinical Validation: Medical professionals can verify that the model focuses on relevant morphological features (e.g., parasite structures within RBCs)
-Model Debugging: Identifies if the model relies on artifacts or irrelevant regions
-Trust & Transparency: Builds confidence in model decisions for medical deployment
+Use Cases:\
+Clinical Validation: Medical professionals can verify that the model focuses on relevant morphological features (e.g., parasite structures within RBCs)\
+Model Debugging: Identifies if the model relies on artifacts or irrelevant regions\
+Trust & Transparency: Builds confidence in model decisions for medical deployment\
 
-Current Status:
-Grad-CAM heatmaps have been generated for sample images in the exploratory phase
-Future Enhancement: Real-time Grad-CAM integration for live predictions (see Limitations & Future Work)
+Current Status:\
+Grad-CAM heatmaps have been generated for sample images in the exploratory phase\
+Future Enhancement: Real-time Grad-CAM integration for live predictions (see Limitations & Future Work)\
 
-**Uncertainty Estimation: Monte Carlo Dropout**
-Monte Carlo Dropout was implemented to quantify model uncertainty, providing confidence intervals alongside predictions.
+**Uncertainty Estimation: Monte Carlo Dropout**\
+Monte Carlo Dropout was implemented to quantify model uncertainty, providing confidence intervals alongside predictions.\
 
-Approach:
-Runs multiple forward passes with dropout enabled during inference
-Each forward pass produces slightly different predictions due to stochastic dropout
-Aggregates predictions to compute:
+Approach:\
+Runs multiple forward passes with dropout enabled during inference\
+Each forward pass produces slightly different predictions due to stochastic dropout\
+Aggregates predictions to compute:\
+Mean Prediction: Expected class probability\
+Standard Deviation: Uncertainty measure\
 
-Mean Prediction: Expected class probability
-Standard Deviation: Uncertainty measure
+Interpretation:\
+Low Uncertainty: Model is confident in its prediction\
+High Uncertainty: Model is less confident; prediction should be reviewed with caution\
+Particularly useful for flagging borderline cases in clinical settings\
 
-Interpretation:
-Low Uncertainty: Model is confident in its prediction
-High Uncertainty: Model is less confident; prediction should be reviewed with caution
-Particularly useful for flagging borderline cases in clinical settings
-
-Mathematical Foundation
+Mathematical Foundation\
 <img width="386" height="245" alt="image" src="https://github.com/user-attachments/assets/400ad4db-2a38-487e-a2a8-83e9d23f5f71" />
-Where N = 30 forward passes
+Where N = 30 forward passes\
 
-**Dashboard Overview**
-An interactive Streamlit application provides a comprehensive interface for model evaluation and inference.
-Dashboard Sections
-1. Model Comparison Table
-Side-by-side accuracy metrics for all three models
-Highlights performance improvements across train/val/test sets
+**Dashboard Overview**\
+An interactive Streamlit application provides a comprehensive interface for model evaluation and inference.\
+Dashboard Sections\
+1. Model Comparison Table\
+Side-by-side accuracy metrics for all three models\
+Highlights performance improvements across train/val/test sets\
 
-2. Training Curves Visualization
-Loss curves (convergence analysis) for each model
-Accuracy curves (generalization performance) for each model
-Visual comparison of overfitting/underfitting behavior
+2. Training Curves Visualization\
+Loss curves (convergence analysis) for each model\
+Accuracy curves (generalization performance) for each model\
+Visual comparison of overfitting/underfitting behavior\
 
-3. Explainability Gallery
-Sample Grad-CAM heatmaps for Parasitized cells
-Sample Grad-CAM heatmaps for Uninfected cells
-Original image + heatmap overlay for interpretability
+3. Explainability Gallery\
+Sample Grad-CAM heatmaps for Parasitized cells\
+Sample Grad-CAM heatmaps for Uninfected cells\
+Original image + heatmap overlay for interpretability\
 
-4. Monte Carlo Uncertainty Estimation
-Sample prediction distributions from Monte Carlo forward passes
-Histogram of prediction probabilities showing model confidence
-Demonstrates uncertainty quantification in action
+4. Monte Carlo Uncertainty Estimation\
+Sample prediction distributions from Monte Carlo forward passes\
+Histogram of prediction probabilities showing model confidence\
+Demonstrates uncertainty quantification in action\
 
-5. Live Prediction Interface
-Upload custom cell microscopy images (JPG/PNG)
-Real-time prediction: Parasitized or Uninfected
-Confidence score derived from Monte Carlo mean prediction
-Note: Grad-CAM is not yet applied to live predictions (see Future Work)
+5. Live Prediction Interface\
+Upload custom cell microscopy images (JPG/PNG)\
+Real-time prediction: Parasitized or Uninfected\
+Confidence score derived from Monte Carlo mean prediction\
+Note: Grad-CAM is not yet applied to live predictions (see Future Work)\
 
-6. Running the Dashboard
+7. Running the Dashboard
 streamlit run app.py
 
 **Tech Stack**
@@ -145,50 +145,6 @@ streamlit==1.28.0
 numpy==1.24.3
 pillow==10.0.0
 
-Step 4: Project Structure
-
-malaria-detection-system/
-
-│
-
-├── notebooks/
-
-│   ├── malaria_bn.ipynb              # LeNet with Batch Normalization
-
-│   ├── mobilenetv2.ipynb             # MobileNetV2 Transfer Learning
-
-│   ├── gradCAM.ipynb                 # Grad-CAM Explainability Exploration
-
-│   └── monteCarlo.ipynb              # Monte Carlo Uncertainty Analysis
-
-│
-├── models/
-│   ├── lenet_model.keras
-│   ├── mobilenet_model.keras
-│   └── malaria_finetuned_model.keras
-│
-├── assets/
-│   ├── loss_curves/
-│   │   ├── lenet_loss.png
-│   │   ├── mobilenet_loss.png
-│   │   └── mobilenetFinetune_loss.png
-│   ├── accuracy_curves/
-│   │   ├── lenet_acc.png
-│   │   ├── mobilenet_acc.png
-│   │   └── mobilenetFinetune_acc.png
-│   ├── montecarlo/
-│   │   ├── mc_image_1.png
-│   │   └── mc_hist_1.png
-│   └── gradcam/
-│       ├── sample_0_Uninfected.jpg
-│       ├── gradcam_0.jpg
-│       ├── sample_2_Parasitized.jpg
-│       └── gradcam_2.jpg
-│
-├── app.py                            # Streamlit Dashboard
-├── requirements.txt
-└── README.md
-
 **Usage**
 
 **Training a Model (Google Colab)**
@@ -208,20 +164,20 @@ View prediction and confidence score
 
 Key Findings
 
-Transfer Learning Effectiveness:
+1. Transfer Learning Effectiveness:
 Fine-tuned MobileNetV2 outperformed the custom baseline LeNet model
 Test accuracy improved from 93.73% (LeNet) to 95.72% (Fine-tuned MobileNetV2)
 Demonstrates the value of pre-trained ImageNet features for medical imaging tasks
 
-Generalization
+2. Generalization
 Model maintains strong test performance despite training on limited data
 Validation accuracy (96.5%) close to test accuracy (95.72%) indicates good generalization
 
-Model Interpretability
+3. Model Interpretability
 Grad-CAM heatmaps reveal that the model focuses on cell interior structures
 High confidence in identifying parasitized cells when parasites are present
 
-Uncertainty Quantification:
+4. Uncertainty Quantification:
 Monte Carlo Dropout captures model uncertainty effectively
 Low uncertainty for clear cases; higher uncertainty for ambiguous cell morphologies
 

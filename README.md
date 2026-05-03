@@ -21,10 +21,10 @@ Key Insight: The fine-tuned MobileNetV2 achieves the best test accuracy (95.72%)
 **Methodology**
 
 **Data**
-Source: TensorFlow Malaria Dataset
-Classes: Parasitized (infected), Uninfected (clean)
-Image Resolution: 224 × 224 pixels (resized for model input)
-Train/Val/Test Split: Stratified division to maintain class balance
+Source: TensorFlow Malaria Dataset\
+Classes: Parasitized (infected), Uninfected (clean)\
+Image Resolution: 224 × 224 pixels (resized for model input)\
+Train/Val/Test Split: Stratified division to maintain class balance\
 
 **Model Development Pipeline**
 

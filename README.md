@@ -148,12 +148,19 @@ pillow==10.0.0
 Step 4: Project Structure
 
 malaria-detection-system/
+
 │
+
 ├── notebooks/
+
 │   ├── malaria_bn.ipynb              # LeNet with Batch Normalization
+
 │   ├── mobilenetv2.ipynb             # MobileNetV2 Transfer Learning
+
 │   ├── gradCAM.ipynb                 # Grad-CAM Explainability Exploration
+
 │   └── monteCarlo.ipynb              # Monte Carlo Uncertainty Analysis
+
 │
 ├── models/
 │   ├── lenet_model.keras

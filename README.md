@@ -21,7 +21,8 @@ Key Insight: The fine-tuned MobileNetV2 achieves the best test accuracy (95.72%)
 
 **Methodology**
 
-**Data**\
+**Data**
+
 Source: TensorFlow Malaria Dataset\
 Classes: Parasitized (infected), Uninfected (clean)\
 Image Resolution: 224 × 224 pixels (resized for model input)\
@@ -44,7 +45,7 @@ Unfroze selective layers for domain adaptation\
 Low learning rate to prevent catastrophic forgetting\
 Data augmentation techniques applied during training
 
-**Training Configuration**\
+**Training Configuration**
 
 1. Optimizer: Adam
 2. Loss Function: Binary Crossentropy
